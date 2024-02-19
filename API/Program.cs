@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<DataContext>(opt =>{
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 }); //adding DataContext as a service
+builder.Services.AddCors();// to help angular to access
 
 var app = builder.Build();
 
@@ -17,6 +18,8 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200") ); // to help angular to access
 
 app.MapControllers();
 
