@@ -1,0 +1,3 @@
+.dropdown-toggle, .dropdown-item {
+    cursor: pointer; /* to change the mouse when we hover over */
+}

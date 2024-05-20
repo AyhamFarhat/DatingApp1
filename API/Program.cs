@@ -26,7 +26,7 @@ app.UseHttpsRedirection();
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200") ); // to help angular to access
 
 app.UseAuthentication(); // asks  : do you have a valid token
-app.UseAuthorization(); // says : ok you have a valid token.... now what are you allowed to do
+app.UseAuthorization(); // if you have.... says : ok you have a valid token.... now what are you allowed to do
 
 app.MapControllers();
 
