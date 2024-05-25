@@ -5,7 +5,8 @@ using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using API.Extensions; // to allow us using  AddApplicationServices(...)
+using API.Extensions;
+using API.Middleware; // to allow us using  AddApplicationServices(...)
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,7 @@ builder.Services.AddIdentityServices(builder.Configuration);// the code in /Exte
 var app = builder.Build();
 
 
-
+app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
 
