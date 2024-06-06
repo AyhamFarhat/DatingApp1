@@ -16,6 +16,8 @@ namespace API.Extensions
 
         services.AddCors();// to help angular to access
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         return services;
         }
 
