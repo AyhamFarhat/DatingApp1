@@ -11,7 +11,7 @@ public class AppUser
 
     public byte[] PasswordSalt {get; set; }
 
-    public DateOnly DataOfBirth { get; set; }
+    public DateOnly DateOfBirth { get; set; }
     public string KnownAs { get; set; }
     public DateTime Created { get; set; } = DateTime.UtcNow;
     public DateTime LastActive { get; set; } = DateTime.UtcNow;
@@ -24,7 +24,7 @@ public class AppUser
     public List<Photo> Photos { get; set; } = new();
 
     // public int GetAge(){
-    //     return DataOfBirth.CalcuateAge();
+    //     return DateOfBirth.CalcuateAge();
     // }
 
 }

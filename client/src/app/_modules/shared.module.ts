@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     CommonModule,
     ToastrModule.forRoot({positionClass:'toast-bottom-right'}), // ToastrModule added
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
 
   ],
   exports:[

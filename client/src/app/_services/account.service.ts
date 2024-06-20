@@ -2,19 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, map} from 'rxjs';
 import { User } from '../_models/user';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 
 /* 
-this account service is going to be responsible for making
+ this account service is going to be responsible for making
  the HTTP requests from our client to our server.
 */
 
 export class AccountService {
-baseUrl = 'https://localhost:5001/api/';
-private currentUserSource = new BehaviorSubject<User | null>(null); 
-currentUser$ = this.currentUserSource.asObservable();
+  baseUrl = environment.apiUrl;
+  private currentUserSource = new BehaviorSubject<User | null>(null); 
+  currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }
 

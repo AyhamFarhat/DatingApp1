@@ -14,20 +14,20 @@ export class HomeComponent implements OnInit {
     
   }
   ngOnInit(): void {
-    this.grtUsers();
+    //this.grtUsers();
   }
   registerToggle(){
     this.registerMode = !this.registerMode; 
   }
 
-  grtUsers(){
-    this.http.get('https://localhost:5001/api/user').subscribe({
-      next: response => this.users = response,
-      error: error => console.log(error),
-      complete: () => console.log('Request has completed')
+  // grtUsers(){
+  //   this.http.get('https://localhost:5001/api/user').subscribe({
+  //     next: response => this.users = response,
+  //     error: error => console.log(error),
+  //     complete: () => console.log('Request has completed')
 
-    });
-  }
+  //   });
+  // }
 
   cancleRegisterMode(event: boolean){
     this.registerMode = event;
