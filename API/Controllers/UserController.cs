@@ -1,4 +1,6 @@
-﻿using API.Data;
+﻿// this file is used to create the database schema, to apply the schema to the database.
+// this file handles the migration of the database schema.
+using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.interfaces;

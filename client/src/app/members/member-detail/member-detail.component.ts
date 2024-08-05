@@ -16,7 +16,7 @@ export class MemberDetailComponent implements OnInit{
 
   member: Member | undefined;
   images: GalleryItem[] = [];
-
+  activeTabId = 1;
   constructor(private memberService: MembersService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -38,11 +38,14 @@ export class MemberDetailComponent implements OnInit{
     if(!this.member) return;
     for(const photo of this.member?.photos){
       this.images.push( new ImageItem({ src: photo?.url, thumb: photo?.url }) );
-      this.images.push( new ImageItem({ src: photo?.url, thumb: photo?.url }) );
 
 
     }
     
+  }
+
+  setActiveTab(tabId: number) {
+    this.activeTabId = tabId;
   }
 
 }

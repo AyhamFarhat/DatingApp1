@@ -32,9 +32,10 @@
     </div>
 
     <div class="col-8">
-        <ul ngbNav #nav="ngbNav" class="nav nav-tabs member-tabset">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" class="nav nav-tabs member-tabset">
+
           <li ngbNavItem>
-            <button ngbNavLink class="nav-link">About {{member.knownAs}}</button>
+            <button ngbNavLink class="nav-link"  (click)="setActiveTab(1)">About {{member.knownAs}}</button>
             <ng-template ngbNavContent>
               <div class="tab-panel">
                 <h4>Description</h4>
@@ -44,8 +45,9 @@
               </div>
             </ng-template>
           </li>
+
           <li ngbNavItem>
-            <button ngbNavLink class="nav-link">Interests</button>
+            <button ngbNavLink class="nav-link" (click)="setActiveTab(2)">Interests</button>
             <ng-template ngbNavContent>
               <div class="tab-panel">
                 <h4>Interests</h4>
@@ -53,14 +55,16 @@
               </div>
             </ng-template>
           </li>
+
           <li ngbNavItem>
-            <button ngbNavLink class="nav-link">Photos</button>
+            <button ngbNavLink class="nav-link"  (click)="setActiveTab(3)">Photos</button>
             <ng-template ngbNavContent>
-              <gallery [items]="images" class="gallery"></gallery>
+              <gallery *ngIf="activeTabId === 3" [items]="images" class="gallery"></gallery>
             </ng-template>
           </li>
+
           <li ngbNavItem>
-            <button ngbNavLink class="nav-link">Messages</button>
+            <button ngbNavLink class="nav-link" (click)="setActiveTab(4)">Messages</button>
             <ng-template ngbNavContent>
               <div class="tab-panel">
                 Messages will go here
