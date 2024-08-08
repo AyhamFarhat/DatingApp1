@@ -24,6 +24,7 @@ namespace API.Controllers
             _context = context;
         }
 
+
         [HttpPost("register")] // POST: api/account/register?username=dave&password=pwd
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
@@ -38,7 +39,7 @@ namespace API.Controllers
                 PasswordSalt = hmac.Key
             };
 
-            _context.Users.Add(user);
+            _context.Users.Add(user); 
             await _context.SaveChangesAsync();
 
             return new UserDto
@@ -72,6 +73,8 @@ namespace API.Controllers
 
          }
 
+
+        // helper method to check if user exists
         private async Task<bool> UserExists(string username)
         {
             return await _context.Users.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
