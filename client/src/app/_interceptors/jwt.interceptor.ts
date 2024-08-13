@@ -1,3 +1,4 @@
+// Purpose: Interceptor to add the JWT token to the header of each request to the API.
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, take } from "rxjs";

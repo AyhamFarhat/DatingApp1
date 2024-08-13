@@ -1,4 +1,5 @@
-
+// Purpose: Interface for the User Repository.
+// This interface is used to define the methods that the User Repository must implement.
 using API.DTOs;
 using API.Entities;
 

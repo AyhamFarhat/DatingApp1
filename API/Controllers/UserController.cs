@@ -1,5 +1,6 @@
 ﻿// this file is used to create the database schema, to apply the schema to the database.
 // this file handles the migration of the database schema.
+using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -28,6 +29,9 @@ public class UserController : BaseApiController
     {
         var users = await _userRepository.GetMembersAsync();
         return Ok(users);
+        // var users = await _userRepository.GetUsersAsync();
+        // var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
+        // return Ok(usersToReturn);
     }
 
 
@@ -37,11 +41,29 @@ public class UserController : BaseApiController
         var user = await _userRepository.GetMemberAsync(username);
         return user;
     }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+    {
+        var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var user = await _userRepository.GetUserByUsernameAsync(username);
+
+        if(user == null) return NotFound();
+
+        _mapper.Map(memberUpdateDto, user);
+
+        //_userRepository.Update(user);
+
+        if (await _userRepository.SaveAllAsync()) return NoContent();
+
+        return BadRequest("Failed to update user");
+
+
+    }
+}
 }
 
 
-
-}
 // [HttpGet]
 //     public ActionResult<IEnumerable<AppUser>> GetUsers()
 //     {

@@ -1,4 +1,4 @@
-
+// Purpose: Contains the Seed class which is used to seed the database with user data.
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;

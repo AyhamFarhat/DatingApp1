@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
   registerMode= false;
   users: any;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     
   }
   ngOnInit(): void {
@@ -19,7 +19,9 @@ export class HomeComponent implements OnInit {
   registerToggle(){
     this.registerMode = !this.registerMode; 
   }
-
+  cancleRegisterMode(event: boolean){
+    this.registerMode = event;
+  }
   // grtUsers(){
   //   this.http.get('https://localhost:5001/api/user').subscribe({
   //     next: response => this.users = response,
@@ -29,7 +31,5 @@ export class HomeComponent implements OnInit {
   //   });
   // }
 
-  cancleRegisterMode(event: boolean){
-    this.registerMode = event;
-  }
+  
 }

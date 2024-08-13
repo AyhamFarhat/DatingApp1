@@ -1,3 +1,4 @@
+// Purpose: Error interceptor to handle errors from the API and display them to the user.
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';

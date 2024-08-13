@@ -1,4 +1,5 @@
-
+// Purpose: Contains the methods for the User Repository.
+// This includes methods to get a user by their username, get a user by their ID, get all users, get all members, get a member by their username, and save all changes.
 using API.DTOs;
 using API.Entities;
 using API.interfaces;
@@ -52,7 +53,7 @@ namespace API.Data
 
         public async Task<bool> SaveAllAsync()
         {
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.SaveChangesAsync() > 0; // if changes are saved, return true (0 nothing saved)
         }
 
         public void Update(AppUser user)

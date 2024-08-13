@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240531125707_ExtendedUserEntity")]
+    [Migration("20240810102817_ExtendedUserEntity")]
     partial class ExtendedUserEntity
     {
         /// <inheritdoc />
@@ -92,7 +92,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Photo");
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>

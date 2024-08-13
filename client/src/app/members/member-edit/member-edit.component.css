@@ -1,0 +1,28 @@
+.img-thumbnail{
+    margin: 25px;
+    width: 85%;
+    height: 85%;
+}
+.card-body{
+    padding: 0 25px;
+}
+
+.card-footer{
+    padding: 10px 15px;
+    border-top: none;
+}
+
+.gallery{
+    height: 600px;
+}
+
+.no-spacing {
+    margin: 0;        
+    padding: 0;        
+    border-radius: 0; 
+}
+
+.alert-info {
+    margin-bottom: 0;  
+    padding: 1rem;     
+}
