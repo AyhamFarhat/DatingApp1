@@ -25,9 +25,10 @@
           </li>
           
         </ul>
-
-        <div ngbDropdown class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" >
-          <a ngbDropdownToggle class="dropdown-toggle text-light text-decoration-none" >Welcome {{user.username | titlecase}}</a>
+        
+        <div ngbDropdown class="dropdown" *ngIf="(accountService.currentUser$ | async) as user">
+          <img src="{{user.photoUrl || './assets/user.png'}}" alt="user photo">
+          <a ngbDropdownToggle class="dropdown-toggle text-light text-decoration-none ms-2" >Welcome {{user.username | titlecase}}</a>
           <div class="dropdown-menu" ngbDropdownMenu>
             <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
             <a class="dropdown-item" (click)="logout()">Logout</a>

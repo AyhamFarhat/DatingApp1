@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,7 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     ServerErrorComponent,
     MemberCardComponent,
     MemberEditComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    PhotoEditorComponent
                
   ],
   imports: [
@@ -56,6 +58,6 @@ import { SpinnerComponent } from './spinner/spinner.component';
     {provide: HTTP_INTERCEPTORS, useClass:LoadingInterceptor,multi: true}
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
