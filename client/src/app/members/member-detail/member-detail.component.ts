@@ -5,12 +5,13 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GalleryComponent, GalleryItem, ImageItem } from 'ng-gallery';
+import { TimeagoModule } from 'ngx-timeago';
 @Component({
   selector: 'app-member-detail',
   standalone: true,
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css',
-  imports: [CommonModule, NgbModule, GalleryComponent ]
+  imports: [CommonModule, NgbModule, GalleryComponent, TimeagoModule ]
 })
 export class MemberDetailComponent implements OnInit{
 
