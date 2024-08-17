@@ -21,9 +21,12 @@ export class MembersService {
   //paginatesResult: PaginatedResult<Member[]> = new PaginatedResult<Member[]>();
 
   constructor(private http: HttpClient, private accountService: AccountService) {
+    console.log('MembersService constructor');
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
+        console.log(user);
         if (user){
+          console.log(user);
           this.userParams = new UserParams(user);
           this.user = user;
         }
@@ -50,6 +53,7 @@ export class MembersService {
     params = params.append('maxAge', userParams.maxAge);
     params = params.append('gender', userParams.gender);
     params = params.append('orderBy', userParams.orderBy);
+
 
     return this.getPaginatedResult<Member[]>(this.baseUrl + 'user', params).pipe(
       map(response=>{

@@ -17,14 +17,21 @@ export class AccountService {
   private currentUserSource = new BehaviorSubject<User | null>(null); 
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    const user: User = JSON.parse(localStorage.getItem('user')!);
+    if(user){
+      this.setCurrentUser(user);
+    }
+   }
 
   login(model: any){
+    
     return this.http.post<User>(this.baseUrl +'account/login', model).pipe(
       map((response: User) =>{
         const user = response;
         if (user){
           this.setCurrentUser(user);
+          //console.log(user);
         }
       })
     )
