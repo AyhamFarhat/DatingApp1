@@ -1,4 +1,4 @@
-// will act lik a join table between users and users
+
 namespace API.Entities
 {
     public class UserLike
@@ -7,5 +7,7 @@ namespace API.Entities
         public int SourceUserId { get; set; }
         public AppUser TargetUser { get; set; }
         public int TargetUserId { get; set; }
+
+        
     }
 }

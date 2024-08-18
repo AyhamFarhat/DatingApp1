@@ -21,12 +21,10 @@ export class MembersService {
   //paginatesResult: PaginatedResult<Member[]> = new PaginatedResult<Member[]>();
 
   constructor(private http: HttpClient, private accountService: AccountService) {
-    console.log('MembersService constructor');
+    console.log('Direct value from BehaviorSubject:', this.accountService.currentUserSource.getValue());
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
-        console.log(user);
         if (user){
-          console.log(user);
           this.userParams = new UserParams(user);
           this.user = user;
         }
@@ -53,7 +51,6 @@ export class MembersService {
     params = params.append('maxAge', userParams.maxAge);
     params = params.append('gender', userParams.gender);
     params = params.append('orderBy', userParams.orderBy);
-
 
     return this.getPaginatedResult<Member[]>(this.baseUrl + 'user', params).pipe(
       map(response=>{
@@ -92,18 +89,31 @@ export class MembersService {
     return this.http.delete(this.baseUrl + 'user/delete-photo/' + photoId);
   }
 
+
+
+
+
   addLike(username: string){
     return this.http.post(this.baseUrl + 'likes/' + username, {});
   }
-
-  
-
-  getLikes(predicate: string, pageNumber: number, pageSize: number){
-    let params = this.getPaginationHeaders(pageNumber, pageSize);
+  getLikes(predicate: string, pageNumber: number, pageSize:number){
+    let params = this.getPaginationHeaders(pageNumber,pageSize);
     params = params.append('predicate', predicate);
-    return this.getPaginatedResult<Member[]>(this.baseUrl + 'likes', params);
+    //return this.http.get<Member[]>(this.baseUrl + 'likes?predicate=' + predicate);
+    return this.getPaginatedResult<Member[]>(this.baseUrl+ 'likes', params);
   }
-  
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

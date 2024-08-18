@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { User } from '../_models/user';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { MembersService } from '../_services/members.service';
 
 @Component({
   selector: 'app-nav',
@@ -16,8 +15,7 @@ export class NavComponent implements OnInit{
   //loggedIn = false; // not good for security
   //currentUser$: Observable<User | null> = of(null);//because accountService was private
 
-  constructor(public accountService: AccountService, private router:Router,
-     private toastr: ToastrService, private memberService: MembersService) {}
+  constructor(public accountService: AccountService, private router:Router, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     //this.currentUser$ = this.accountService.currentUser$; // because accountService was private
@@ -37,7 +35,6 @@ export class NavComponent implements OnInit{
       next: _ => this.router.navigateByUrl('/members'),
       //error: error => this.toastr.error(error.error)
     })
-    
   }
 
   // login(){
