@@ -1,83 +1,67 @@
-<div class="row" *ngIf="member">
-    <div class="col-4">
-        <div class="card">
-            <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
-            <div class="card-body">
-                <div>
-                    <strong>Location:</strong>
-                    <p>{{member.city}}, {{member.country}}</p>
-                </div>
-                <div>
-                    <strong>Age:</strong>
-                    <p>{{member.age}}</p>
-                </div>
-                <div>
-                    <strong>Last active:</strong>
-                    <p>{{member.lastActive + 'z' | timeago}}</p>
-                </div>
-                <div>
-                    <strong>Member since:</strong>
-                    <p>{{member.created | date:'dd MMM yyyy'}}</p>
-                </div>
+<div class="row">
+  <div class="col-4">
+    <div class="card">
+      <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
+        <div class="card-body">
+
+          <div>
+            <strong>Location:</strong>
+            <p>{{member.city}}, {{member.country}}</p>
+          </div>
+
+          <div>
+            <strong>Age:</strong>
+            <p>{{member.age}}</p>
+          </div>
+
+          <div>
+            <strong>Last active:</strong>
+            <p>{{member.lastActive + 'z' | timeago}}</p>
+          </div>
+
+          <div>
+            <strong>Member since:</strong>
+            <p>{{member.created | date:'dd MMM yyyy'}}</p>
+          </div>
                 
-            </div>
-            <div class="card-footer">
-                <div class="btn-group d-flex">
-                    <button class="btn btn-primary">Like</button>
-                    <button class="btn btn-success">Message</button>
-
-                </div>
-            </div>   
         </div>
+        <div class="card-footer">
+          <div class="btn-group d-flex">
+             <button class="btn btn-primary">Like</button>
+              <button (click)="selectTab('Messages')" class="btn btn-success" >Message</button>
+          </div>
+        </div>   
     </div>
+  </div>
 
-    <div class="col-8">
-        <ul ngbNav #nav="ngbNav" class="nav nav-tabs member-tabset">
+  <div class="col-8">
 
+    <tabset class="member-tabset" #memberTabs>
 
-          <li ngbNavItem>
-            <button ngbNavLink>About {{member.knownAs}}</button>
-            <ng-template ngbNavContent>
-              <div class="tab-panel">
-                <h4>Description</h4>
-                <p>{{member.introduction}}</p>
-                <h4>Looking for</h4>
-                <p>{{member.lookingFor}}</p>
-              </div>
-            </ng-template>
-          </li>
+      <tab heading="About {{member.knownAs}}" (selectTab)="onTabActivated($event)">
+          <h4>Description</h4>
+          <p>{{member.introduction}}</p>
+          <h4>Looking for</h4>
+          <p>{{member.lookingFor}}</p>
+      </tab>
 
+      <tab heading="Interests" (selectTab)="onTabActivated($event)">
+          <h4>Interests</h4>
+          <p>{{member.interests}}</p>
+      </tab>
 
-          <li ngbNavItem>
-            <button ngbNavLink>Interests</button>
-            <ng-template ngbNavContent>
-              <div class="tab-panel">
-                <h4>Interests</h4>
-                <p>{{member.interests}}</p>
-              </div>
-            </ng-template>
-          </li>
+      <tab heading="Photos" #photoTab="tab" (selectTab)="onTabActivated($event)">
+        <gallery *ngIf="photoTab.active"  [items]="images" class="gallery"></gallery>
+      </tab>
+      <tab heading="Messages" (selectTab)="onTabActivated($event)">
+        <div class="tab-panel">
+          <app-member-messages [username]="member.userName" [messages]="messages"></app-member-messages>
+        </div>
+      </tab>
+    </tabset>
+    
+  </div>
 
-
-          <li ngbNavItem #photoNgbNavItem="ngbNavItem">
-            <button  ngbNavLink>Photos</button>
-            <ng-template ngbNavContent *ngIf="photoNgbNavItem.active">
-              <gallery  [items]="images" class="gallery"></gallery>
-            </ng-template>
-          </li>
-
-          <li ngbNavItem>
-            <button  ngbNavLink>Messages</button>
-            <ng-template ngbNavContent >
-              <div class="tab-panel">
-                Messages will go here
-              </div>
-            </ng-template>
-          </li>
-
-        </ul>
-        <div [ngbNavOutlet]="nav" class="tab-content"></div>
-      </div>
       
       
 </div>
@@ -86,78 +70,50 @@
 
 
 
- <!-- <tabset class="member-tabset">
-
-          <tab heading="About {{member.knownAs}}">
-              <h4>Description</h4>
-              <p>{{member.introduction}}</p>
-              <h4>Looking for</h4>
-              <p>{{member.lookingFor}}</p>
-          </tab>
-
-          <tab heading="Interests">
-              <h4>Interests</h4>
-              <p>{{member.interests}}</p>
-          </tab>
-
-          <tab heading="Photos" #photoTab="tab">
-            <gallery *ngIf="photoTab.active"  [items]="images" class="gallery"></gallery>
-          </tab>
-          <tab heading="Messages">
-            <div class="tab-panel">
-              Messages will go here
-            </div>
-          </tab>
-        </tabset> -->
+ <!-- <ul ngbNav #nav="ngbNav" class="nav nav-tabs member-tabset">
 
 
-         
-      
-      
+      <li ngbNavItem #aboutTab="ngbNavItem" id="0">
+        <button ngbNavLink>About {{member.knownAs}}</button>
+        <ng-template ngbNavContent>
+          <div class="tab-panel">
+            <h4>Description</h4>
+            <p>{{member.introduction}}</p>
+            <h4>Looking for</h4>
+            <p>{{member.lookingFor}}</p>
+          </div>
+        </ng-template>
+      </li>
+    
+    
+      <li ngbNavItem #interestsTab="ngbNavItem">
+        <button ngbNavLink>Interests</button>
+        <ng-template ngbNavContent>
+          <div class="tab-panel">
+            <h4>Interests</h4>
+            <p>{{member.interests}}</p>
+          </div>
+        </ng-template>
+      </li>
+    
+    
+      <li ngbNavItem #photoTab="ngbNavItem">
+        <button  ngbNavLink>Photos</button>
+        <ng-template ngbNavContent *ngIf="photoTab.active">
+          <gallery  [items]="images" class="gallery"></gallery>
+        </ng-template>
+      </li>
+    
 
+      <li ngbNavItem id="messages-tab" #messageTab="ngbNavItem">
+        <button  ngbNavLink>Messages</button>
+        <ng-template ngbNavContent >
+          <div class="tab-panel">
+            <app-member-messages [username]="member.userName"></app-member-messages>
+          </div>
+        </ng-template>
+      </li>
+    
 
-
-<!-- 
-<li ngbNavItem>
-  <button ngbNavLink>About {{member.knownAs}}</button>
-  <ng-template ngbNavContent>
-    <div class="tab-panel">
-      <h4>Description</h4>
-      <p>{{member.introduction}}</p>
-      <h4>Looking for</h4>
-      <p>{{member.lookingFor}}</p>
-    </div>
-  </ng-template>
-</li>
-
-
-<li ngbNavItem>
-  <button ngbNavLink>Interests</button>
-  <ng-template ngbNavContent>
-    <div class="tab-panel">
-      <h4>Interests</h4>
-      <p>{{member.interests}}</p>
-    </div>
-  </ng-template>
-</li>
-
-
-<li ngbNavItem #photoNgbNavItem="ngbNavItem">
-  <button  ngbNavLink>Photos</button>
-  <ng-template ngbNavContent *ngIf="photoNgbNavItem.active">
-    <gallery  [items]="images" class="gallery"></gallery>
-  </ng-template>
-</li>
-
-<li ngbNavItem>
-  <button  ngbNavLink>Messages</button>
-  <ng-template ngbNavContent >
-    <div class="tab-panel">
-      Messages will go here
-    </div>
-  </ng-template>
-</li>
-
-</ul>
-<div [ngbNavOutlet]="nav" class="tab-content"></div>
-</div> -->
+    </ul>
+    <div [ngbNavOutlet]="nav" class="tab-content"></div> -->

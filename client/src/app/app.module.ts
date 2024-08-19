@@ -46,7 +46,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SpinnerComponent,
     PhotoEditorComponent,
     TextInputComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    
                
   ],
   imports: [
