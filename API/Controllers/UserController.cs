@@ -27,6 +27,7 @@ namespace API.Controllers{
             _photoService = photoService;
 
         }
+
         [HttpGet]
         public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
@@ -44,7 +45,6 @@ namespace API.Controllers{
             // var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
             // return Ok(usersToReturn);
         }
-
 
         [HttpGet("{username}")] // api/user/2
         public async Task<ActionResult<MemberDto>> GetUser(string username)

@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using API.Extensions;
-using API.Middleware; // to allow us using  AddApplicationServices(...)
+using API.Middleware;
+using Microsoft.AspNetCore.Identity;
+using API.Entities; // to allow us using  AddApplicationServices(...)
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,8 +39,10 @@ using var scope = app.Services.CreateScope();
 var services=scope.ServiceProvider;
 try{
     var context = services.GetRequiredService<DataContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
-    await Seed.SeedUsers(context);
+    await Seed.SeedUsers(userManager, roleManager);
 }catch(Exception ex){
     var logger = services.GetService<ILogger<Program>>();
     logger.LogError(ex, "An error occurred during migration");
