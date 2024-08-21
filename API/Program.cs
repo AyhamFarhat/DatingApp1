@@ -8,7 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using API.Extensions;
 using API.Middleware;
 using Microsoft.AspNetCore.Identity;
-using API.Entities; // to allow us using  AddApplicationServices(...)
+using API.Entities;
+using API.SignalR; // to allow us using  AddApplicationServices(...)
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,12 +27,18 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 
 
-app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200") ); // to help angular to access
+app.UseCors(builder => builder
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials()
+    .WithOrigins("https://localhost:4200") ); // to help angular to access
 
 app.UseAuthentication(); // asks  : do you have a valid token
 app.UseAuthorization(); // if you have.... says : ok you have a valid token.... now what are you allowed to do
 
 app.MapControllers();
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
 
 
 
@@ -42,6 +49,11 @@ try{
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
+
+    // to solve multiple connection between the users
+    await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]");
+    context.Connections.RemoveRange(context.Connections);
+
     await Seed.SeedUsers(userManager, roleManager);
 }catch(Exception ex){
     var logger = services.GetService<ILogger<Program>>();
