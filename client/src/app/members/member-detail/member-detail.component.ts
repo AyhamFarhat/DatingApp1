@@ -14,6 +14,7 @@ import { PresenceService } from '../../_services/presence.service';
 import { AccountService } from '../../_services/account.service';
 import { User } from '../../_models/user';
 import { take } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-member-detail',
@@ -30,7 +31,8 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   messages: Message[]=[];
   user?: User;
   constructor(private accountService: AccountService, private route: ActivatedRoute,
-    private messageService: MessageService, public presenceService: PresenceService) {
+    private messageService: MessageService, public presenceService: PresenceService,
+    private memberService: MembersService, private toastr: ToastrService) {
       this.accountService.currentUser$.pipe(take(1)).subscribe({
         next: user => {
           if(user) this.user = user;
@@ -89,6 +91,12 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
     }
     
+  }
+
+  addLike(member: Member){
+    this.memberService.addLike(member.userName).subscribe({
+      next: () => this.toastr.success('You have liked ' + member.knownAs)
+    })
   }
 
   // setActiveTab(tabId: string ) {

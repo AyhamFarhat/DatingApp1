@@ -78,27 +78,58 @@ namespace API.Data
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUserUserName, string recipientUserName)
         {
-            var messgaes = await _context.Messages
-                .Include(u => u.Sender).ThenInclude(p => p.Photos)
-                .Include(u => u.Recipient).ThenInclude(p => p.Photos)
-                .Where(
+            // //this code gives a large qery when i call this method, because of that i mad the below code to get more clean query in the API terminal
+            // var messgaes = await _context.Messages
+            //     .Include(u => u.Sender).ThenInclude(p => p.Photos)
+            //     .Include(u => u.Recipient).ThenInclude(p => p.Photos)
+            //     .Where(
+            //         m => m.RecipientUsername == currentUserUserName && m.RecipientDeleted == false &&
+            //         m.SenderUsername == recipientUserName ||
+            //         m.RecipientUsername == recipientUserName && m.SenderDeleted == false &&
+            //         m.SenderUsername == currentUserUserName
+            //     )
+            //     .OrderBy(m => m.MessageSent)
+            //     .ToListAsync();
+            // var unreadMessages = messgaes.Where(m => m.DateRead == null &&
+            //     m.RecipientUsername == currentUserUserName).ToList();
+            
+            // if(unreadMessages.Any()){
+            //     foreach (var message in unreadMessages){
+            //         message.DateRead = DateTime.UtcNow;
+            //     }
+
+            //     //await _context.SaveChangesAsync();
+            //     // Note: Removed direct call to context.SaveChangesAsync() to ensure changes
+            //     // are saved via the Unit of Work's Complete method, maintaining proper use of
+            //     // the Unit of Work pattern and avoiding potential issues.
+            // }
+            // return _mapper.Map<IEnumerable<MessageDto>>(messgaes);
+
+
+             var query = _context.Messages
+                                .Where(
                     m => m.RecipientUsername == currentUserUserName && m.RecipientDeleted == false &&
                     m.SenderUsername == recipientUserName ||
                     m.RecipientUsername == recipientUserName && m.SenderDeleted == false &&
                     m.SenderUsername == currentUserUserName
                 )
                 .OrderBy(m => m.MessageSent)
-                .ToListAsync();
-            var unreadMessages = messgaes.Where(m => m.DateRead == null &&
+                .AsQueryable();
+
+            var unreadMessages = query.Where(m => m.DateRead == null &&
                 m.RecipientUsername == currentUserUserName).ToList();
             
             if(unreadMessages.Any()){
                 foreach (var message in unreadMessages){
                     message.DateRead = DateTime.UtcNow;
                 }
-                await _context.SaveChangesAsync();
+
+                //await _context.SaveChangesAsync();
+                // Note: Removed direct call to context.SaveChangesAsync() to ensure changes
+                // are saved via the Unit of Work's Complete method, maintaining proper use of
+                // the Unit of Work pattern and avoiding potential issues.
             }
-            return _mapper.Map<IEnumerable<MessageDto>>(messgaes);
+            return await query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider).ToListAsync();
 
             
         }
@@ -108,9 +139,9 @@ namespace API.Data
             _context.Connections.Remove(connection);
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
+        // public async Task<bool> SaveAllAsync()
+        // {
+        //     return await _context.SaveChangesAsync() > 0;
+        // }
     }
 }

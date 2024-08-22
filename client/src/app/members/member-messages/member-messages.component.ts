@@ -1,5 +1,5 @@
 // child of member-detail
-import { Component, Input, OnInit, ViewChild, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild, viewChild } from '@angular/core';
 import { Message } from '../../_models/message';
 import { MessageService } from '../../_services/message.service';
 import { CommonModule, NgFor } from '@angular/common';
@@ -7,6 +7,7 @@ import { TimeagoModule } from 'ngx-timeago';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-member-messages',
   standalone: true,
   templateUrl: './member-messages.component.html',

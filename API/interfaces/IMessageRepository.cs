@@ -10,8 +10,8 @@ namespace API.interfaces
         void DeleteMessage(Message message);
         Task<Message> GetMessage(int id);
         Task<PagedList<MessageDto>> GetMessagesForUser(MessageParams messageParams);
-        Task<IEnumerable<MessageDto>>GetMessageThread(string currentUserUserName, string recipientUserName);
-        Task<bool> SaveAllAsync();
+        Task<IEnumerable<MessageDto>> GetMessageThread(string currentUserUserName, string recipientUserName);
+        //Task<bool> SaveAllAsync();
 
         // methods for tracking our groups
 
