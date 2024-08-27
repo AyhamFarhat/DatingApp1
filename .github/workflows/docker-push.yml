@@ -5,7 +5,8 @@ on:
   # push:
   #   branches:
   #     - 'manin'
-
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -26,3 +27,11 @@ jobs:
           context: "{{defaultContext}}:API"
           push: true
           tags: ayhamfarhat2000/friendspace:latest
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    concurrency: deploy-group    # optional: ensure only one action runs at a time
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
