@@ -15,9 +15,11 @@ import { FormsModule, NgForm } from '@angular/forms';
   imports:[CommonModule, TimeagoModule, FormsModule]
 })
 export class MemberMessagesComponent implements OnInit {
-   @Input() username?: string;
-   messageContent = '';
+  @Input() username?: string;
   @ViewChild('messageForm') messageForm?: NgForm
+
+  messageContent = '';
+  loading = false;
 
   constructor(public messageService: MessageService) {}
   ngOnInit(): void {
@@ -25,8 +27,9 @@ export class MemberMessagesComponent implements OnInit {
   }
   sendMessage(){
     if(!this.username) return;
+    this.loading = true;
     this.messageService.sendMessage(this.username, this.messageContent).then(() => {
       this.messageForm?.reset();
-    })
+    }).finally( () => this.loading = false);
   }
 }

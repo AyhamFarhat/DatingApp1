@@ -5,6 +5,7 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { RolesModalComponent } from '../../modals/roles-modal/roles-modal.component';
 import { initialState } from 'ngx-bootstrap/timepicker/reducer/timepicker.reducer';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-management',
@@ -20,7 +21,9 @@ export class UserManagementComponent implements OnInit{
     'Member'
   ]
 
-  constructor(private adminService: AdminService, private modaleService: BsModalService) { }
+  constructor(private adminService: AdminService, private modaleService: BsModalService,
+      private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void { this.getUsersWithRoles(); }
 
@@ -53,6 +56,26 @@ export class UserManagementComponent implements OnInit{
       }
     })
   }
+
+
+  deleteUser(user: User) {
+    if (confirm(`Are you sure you want to delete ${user.username}?`)) {
+      this.adminService.deleteUser(user.username).subscribe({
+        next: () => {
+          this.users = this.users.filter(u => u.username !== user.username);
+          this.toastr.success('User deleted successfully');
+        },
+        error: () => {
+          this.toastr.error('Failed to delete user');
+          console.error();
+        }
+        
+      });
+    }
+    
+  }
+
+
 
   private arrayEqual(arr1: any[], arr2: any[]){
     return JSON.stringify(arr1.sort()) === JSON.stringify(arr2.sort());

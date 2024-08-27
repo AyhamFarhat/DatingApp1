@@ -12,6 +12,7 @@ namespace API.Controllers
         public AdminController(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
+
             
         }
         [Authorize(Policy = "RequireAdiminRole")]
@@ -48,6 +49,22 @@ namespace API.Controllers
 
             return Ok(await _userManager.GetRolesAsync(user));
         }
+
+
+        [Authorize(Policy = "RequireAdiminRole")]
+        [HttpDelete("delete-user/{username}")]
+        public async Task<ActionResult> DeleteUser(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null) return NotFound(new { Message = "User not found." });
+
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded) return BadRequest(new { Message = "Failed to delete user." });
+
+            return Ok(new { Message = "User deleted successfully." });
+        }
+
+
 
         [Authorize(Policy = "ModeratePhotoRole")]
         [HttpGet("Photos-to-moderate")]

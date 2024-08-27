@@ -20,6 +20,7 @@ namespace API.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
+        
         public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, IMapper mapper)
         {
             _mapper = mapper;

@@ -18,5 +18,9 @@ export class AdminService {
     return this.http.post<string[]>(this.baseUrl + 'admin/edit-roles/'
       + username + '?roles=' + roles, {});
   }
+
+  deleteUser(username: string) {
+    return this.http.delete<any>(this.baseUrl + 'admin/delete-user/' + username);
+}
   
 }
